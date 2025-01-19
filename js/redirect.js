@@ -2,7 +2,7 @@ import { hentUkeplanerData } from "./hent8trinn.js"; // Importer hentUkeplanerDa
 
 // Hent query-parameteren for 'trinn' fra URL-en
 const urlParams = new URLSearchParams(window.location.search);
-const trinn = urlParams.get("trinn"); // F.eks. "8E"
+const trinn = urlParams.get("klasse"); // F.eks. "8E"
 
 // Sjekk om 'trinn' er tilgjengelig i URL-en
 if (trinn) {
