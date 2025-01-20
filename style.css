@@ -1,32 +1,31 @@
 body {
   font-family: Roboto, sans-serif;
+  font-size: 20px;
+  text-align: center;
 }
 
 p,
 a {
-  font-size: 20px;
   margin: 0px;
   margin-bottom: 3px;
-  text-align: center;
+
   display: block;
   color: black;
 }
 
 .timer {
   font-size: 100px;
-  text-align: center;
+
   margin-top: 0;
 }
 
 h1 {
-  text-align: center;
   font-size: min(100px, 9vw);
   margin-top: 30px;
   margin-bottom: 10px;
 }
 
 h2 {
-  text-align: center;
   font-weight: normal;
   margin-top: 10px;
   font-size: min(40px, 8vw);
@@ -36,7 +35,7 @@ h2 {
 h4 {
   width: 60%;
   margin: 0 auto;
-  text-align: center;
+
   font-size: 40px;
   margin-bottom: 5px;
   border-bottom: 2px solid;
@@ -45,7 +44,7 @@ h4 {
 h5 {
   width: 60%;
   margin: 0 auto;
-  text-align: center;
+
   font-size: 20px;
   margin-bottom: 5px;
 }
@@ -72,4 +71,10 @@ h5 {
     width: 100%;
     margin: 0 auto;
   }
+}
+
+#laster {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
 }

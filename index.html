@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Åstveit, skole, Ukeplan, Ukeplaner, Bokmerke," />
+    <meta name="description" content="Se ukeplanen for Åstveit Skole" />
+    <meta name="author" content="Elander Olsen" />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <link rel="shortcut icon" href="favicon.jpg" type="image/x-icon" />
+    <title>Ukeplaner for Åstveit skole</title>
   </head>
   <body>
-    <h1>Lorem ipsum</h1>
+    <h1>Ukeplaner for Åstveit skole</h1>
     <h2>Uken i dag: <span id="uke">4</span></h2>
 
     <div id="trinn-8" class="cards-container">
@@ -79,6 +83,21 @@
       </div>
     </div>
     -->
+
+    <div id="laster"><p>Laster...</p></div>
+
     <script type="module" src="js/brukData.js"></script>
+    <script>
+      function getWeekNumber(date) {
+        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = (date - firstDayOfYear + (firstDayOfYear.getTimezoneOffset() - date.getTimezoneOffset()) * 60000) / 86400000;
+        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+      }
+
+      const today = new Date();
+      const weekNumber = getWeekNumber(today);
+
+      document.getElementById("uke").textContent = weekNumber;
+    </script>
   </body>
 </html>

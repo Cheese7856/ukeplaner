@@ -16,6 +16,7 @@ function settUkeplanerInnIHTML(ukeplaner) {
       }
     }
   }
+  document.getElementById("laster").innerHTML = "";
 }
 
 // Hent data og sett det inn i HTML

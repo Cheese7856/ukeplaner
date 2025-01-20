@@ -36,6 +36,7 @@ if (trinn) {
   } else {
     console.log("Ikke redirectet fra bokmerke eller ny fane.");
     tekst1.innerHTML = "For å legge til nettsiden som et bokmerke, trykk control + D. Da kan du få ukeplanene til dinn klasse med ett trykk.";
+    document.title = `Ukeplan ${trinn}`;
   }
 } else {
   alert("Feil med henting av info.");
