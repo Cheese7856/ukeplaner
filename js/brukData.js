@@ -2,10 +2,9 @@
 
 import { hentUkeplanerData } from "./hent8trinn.js";
 
-// Funksjon for å sette ukeplaner inn i HTML
 function settUkeplanerInnIHTML(ukeplaner) {
   for (let trinn in ukeplaner) {
-    const klasse = trinn.slice(1); // Fjerner "8" og beholder "A", "B", osv.
+    const klasse = trinn.slice(1);
     const trinnDiv = document.querySelector(`#trinn-8 .${klasse}`);
 
     if (trinnDiv) {
