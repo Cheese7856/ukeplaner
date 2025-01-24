@@ -66,6 +66,5 @@ if (document.referrer === "") {
 } else {
   console.log("AAA");
   tekst1.innerHTML = "For å legge til nettsiden som et bokmerke, trykk control + D. Da kan du få ukeplanene til din klasse med ett trykk.";
-  const trinn = urlParams.get("klasse");
-  document.title = "Ukeplan " + trinn;
+  document.title = "Ukeplan";
 }
