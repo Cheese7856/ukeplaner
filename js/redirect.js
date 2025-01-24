@@ -24,7 +24,7 @@ if (document.referrer === "") {
 
       // Åpne den eksisterende ukeplanen i en ny fane
       const newWindow = window.open(storedUrl, "_blank");
-      console.log(newWindow);
+      console.log(storedUrl, existingData);
 
       // Start oppdatering i bakgrunnen
       hentUkeplanerData().then((updatedData) => {
