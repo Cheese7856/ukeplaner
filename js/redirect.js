@@ -1,5 +1,5 @@
 import { hentUkeplanerData } from "./hent8trinn.js";
-window.onload = function () {
+document.addEventListener("DOMContentLoadd", function () {
   const tekst1 = document.getElementById("tekst-1");
 
   // Hent query-parameteren for 'klasse' fra URL-en
@@ -67,4 +67,4 @@ window.onload = function () {
     const trinn = urlParams.get("klasse");
     document.title = "Ukeplan " + trinn;
   }
-};
+});
