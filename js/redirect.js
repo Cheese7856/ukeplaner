@@ -1,43 +1,68 @@
 import { hentUkeplanerData } from "./hent8trinn.js";
+const tekst1 = document.getElementById("tekst-1");
 
+// Hent query-parameteren for 'klasse' fra URL-en
 const urlParams = new URLSearchParams(window.location.search);
-const trinn = urlParams.get("klasse");
 
-if (trinn) {
-  const trinnNr = trinn.slice(0, -1);
-  const klasse = trinn.slice(-1);
+// Sjekk om refereren er tom (blank)
+if (document.referrer === "") {
+  // Hent klasse fra URL-parameteren
+  const klasse = urlParams.get("klasse"); // F.eks. "8E"
 
-  const tekst1 = document.getElementById("tekst-1");
+  // Sjekk om 'klasse' er spesifisert
+  if (klasse) {
+    // Oppdater tittelen til "Ukeplan <klassenavn>"
+    document.title = `Ukeplan ${klasse}`;
 
-  if (document.referrer === "") {
-    hentUkeplanerData()
-      .then((ukeplaner) => {
-        console.log(ukeplaner);
-        const klasseNokkel = trinn;
+    // Hent eksisterende ukeplaner fra localStorage
+    const existingData = JSON.parse(localStorage.getItem("ukeplaner")) || {};
 
-        if (ukeplaner[klasseNokkel]) {
-          const ukene = Object.keys(ukeplaner[klasseNokkel]);
-          const sisteUke = Math.max(...ukene.map(Number));
-          const ukeplanURL = ukeplaner[klasseNokkel][sisteUke.toString()];
+    // Sjekk om vi allerede har data for klassen
+    if (existingData[klasse]) {
+      const ukenummer = Math.max(...Object.keys(existingData[klasse]).map(Number)); // Finn siste ukenummer
+      const storedUrl = existingData[klasse][ukenummer]; // Hent lagret URL
 
-          if (ukeplanURL) {
-            window.location.href = ukeplanURL;
-          } else {
-            alert("Ingen ukeplan funnet for den siste uken.");
-          }
-        } else {
-          alert("Ukeplan ikke funnet for dette trinnet og klassen.");
+      // Åpne den eksisterende ukeplanen i en ny fane
+      const newWindow = window.open(storedUrl, "_blank");
+
+      // Start oppdatering i bakgrunnen
+      hentUkeplanerData().then((updatedData) => {
+        // Sjekk om data for klassen er oppdatert
+        const updatedClassData = updatedData[klasse];
+        const updatedWeek = updatedClassData && Math.max(...Object.keys(updatedClassData).map(Number));
+
+        if (updatedWeek && updatedClassData[updatedWeek] !== storedUrl) {
+          // Ukeplanen er oppdatert
+          console.log("Ny ukeplan oppdaget. Oppdaterer...");
+
+          // Oppdater localStorage med ny data
+          localStorage.setItem("ukeplaner", JSON.stringify(updatedData));
+
+          // Erstatt den gamle fanen med den nye ukeplanen
+          newWindow.location.href = updatedClassData[updatedWeek];
         }
-      })
-      .catch((error) => {
-        console.error("Feil ved henting av ukeplaner:", error);
-        alert("Det oppstod en feil ved henting av ukeplanene.");
       });
-  } else {
-    console.log("Ikke redirectet fra bokmerke eller ny fane.");
-    tekst1.innerHTML = "For å legge til nettsiden som et bokmerke, trykk control + D. Da kan du få ukeplanene til dinn klasse med ett trykk.";
-    document.title = `Ukeplan ${trinn}`;
+
+      document.title = "LUKK DENNE!";
+      tekst1.innerHTML = "Du kan trygt lukke denne siden. ";
+    } else {
+      // Ingen data for klassen i localStorage, hent data og lagre det
+      hentUkeplanerData().then((updatedData) => {
+        if (updatedData[klasse]) {
+          localStorage.setItem("ukeplaner", JSON.stringify(updatedData));
+          const updatedWeek = Math.max(...Object.keys(updatedData[klasse]).map(Number));
+
+          // Åpne den nye ukeplanen i samme fane (uten å åpne ny fane)
+          window.location.href = updatedData[klasse][updatedWeek];
+        }
+      });
+    }
   }
 } else {
-  alert("Feil med henting av info.");
+  // Denne delen blir utført hvis refereren ikke er tom
+  tekst1.innerHTML = "For å legge til nettsiden som et bokmerke, trykk control + D. Da kan du få ukeplanene til din klasse med ett trykk.";
+
+  // Hent trinn fra URL-parameteren og oppdater tittelen
+  const trinn = urlParams.get("klasse");
+  document.title = "Ukeplan " + trinn;
 }

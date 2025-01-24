@@ -12,7 +12,7 @@
   </head>
   <body>
     <h1>Ukeplaner for Åstveit skole</h1>
-    <h2>Uken i dag: <span id="uke">4</span></h2>
+    <h2>Uken i dag: <span id="uke">5</span></h2>
 
     <div id="trinn-8" class="cards-container">
       <div class="card A">
@@ -88,16 +88,32 @@
 
     <script type="module" src="js/brukData.js"></script>
     <script>
-      function getWeekNumber(date) {
-        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-        const pastDaysOfYear = (date - firstDayOfYear + (firstDayOfYear.getTimezoneOffset() - date.getTimezoneOffset()) * 60000) / 86400000;
-        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+      // Denne funksjonen gir ukenummeret i henhold til ISO-standarden
+      Date.prototype.getWeek = function () {
+        var date = new Date(this.getTime());
+        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
+        var week1 = new Date(date.getFullYear(), 0, 4);
+        return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
+      };
+
+      // Denne funksjonen setter ukenummeret i HTML-elementet med id 'uke'
+      function setWeekNumber() {
+        // Hent dagens dato
+        let today = new Date();
+
+        // Hent ukenummeret for dagens dato
+        let currentWeek = today.getWeek();
+
+        // Finn elementet med id "uke"
+        let ukeElement = document.getElementById("uke");
+
+        // Sett ukenummeret som tekstinnhold i elementet
+        ukeElement.textContent = `Uke ${currentWeek}`;
       }
 
-      const today = new Date();
-      const weekNumber = getWeekNumber(today);
-
-      document.getElementById("uke").textContent = weekNumber;
+      // Kall funksjonen når siden lastes
+      setWeekNumber();
     </script>
   </body>
 </html>
