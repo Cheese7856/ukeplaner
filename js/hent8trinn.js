@@ -4,8 +4,9 @@ export function hentUkeplanerData() {
     .then((htmlContent) => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(htmlContent, "text/html");
-      const links = doc.querySelectorAll(".article__content a");
+      let links = Array.from(doc.querySelectorAll(".article__content a"));
 
+      // Fjerner første element
       links.shift();
 
       const ukeplaner = {};
