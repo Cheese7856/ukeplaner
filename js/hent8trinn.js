@@ -6,6 +6,8 @@ export function hentUkeplanerData() {
       const doc = parser.parseFromString(htmlContent, "text/html");
       const links = doc.querySelectorAll(".article__content a");
 
+      links.shift();
+
       const ukeplaner = {};
       const trinn = ["8A", "8B", "8C", "8D", "8E"];
 
