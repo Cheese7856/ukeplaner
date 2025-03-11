@@ -8,6 +8,7 @@ export function hentUkeplanerData() {
 
       // Filtrer ut alle <a>-elementer der tekstinnholdet er blank (tom eller kun whitespace)
       //links = links.filter(link => link.textContent.trim() !== "");
+      links.shift();
 
       const ukeplaner = {};
       const trinn = ["8A", "8B", "8C", "8D", "8E"];
